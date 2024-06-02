@@ -7,8 +7,12 @@ function App() {
   const[weight,setWeight]=useState("");
   const[bmi,setBmi]=useState(null);
 const[bmistatus,setBmiStatus]=useState("");
+const[errormessage, setErrormessage]=useState("");
+
 const calculatebmi=()=>{
-  if(height && weight){
+  const isValidheight=/^\d+$/.test(height);
+  const isValidweight=/^\d+$/.test(weight);
+  if(isValidheight && isValidweight  ){
     const heightInmeter=height/100;
     const bmivalue=weight/(heightInmeter*heightInmeter)
     setBmi(bmivalue.toFixed(2));
@@ -24,11 +28,19 @@ const calculatebmi=()=>{
     else{
       setBmiStatus("Obesity")
     }
+    setErrormessage("");
 
   }else{
     setBmi(null);
     setBmiStatus("");
+    setErrormessage("Please enter valid numeric values for height and weight.")
   }
+}
+const clearall=()=>{
+  setBmi(null);
+  setBmiStatus("");
+  setHeight("");
+  setWeight("");
 }
   return (
     <>
@@ -36,6 +48,9 @@ const calculatebmi=()=>{
       <div className='box'></div>
       <div className='data'>
         <h2>BMI CALCULATOR</h2>
+       {errormessage && <div className='error'>
+          <p>{errormessage}</p>
+        </div>}
         <div className='input-container'>
           <label htmlFor='height'>Height (cm):</label>
           <input type="text" id='height' value={height} onChange={(e)=>setHeight(e.target.value)}></input>
@@ -45,6 +60,7 @@ const calculatebmi=()=>{
           <input type="text" id='weight' value={weight} onChange={(e)=>setWeight(e.target.value)}></input>
         </div>
         <button onClick={calculatebmi}>Calculate BMI</button>
+        <button onClick={clearall} className='btnclear'>Clear</button>
         {bmi!==null&&(
           <div className='result'>
           <p>YOUR BMI is{bmi}</p>

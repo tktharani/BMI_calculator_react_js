@@ -65,9 +65,14 @@ button{
   font-size:16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  
 }
 button :hover{
   background-color: blue;
+}
+.btnclear{
+  background-color: red;
+  margin-left: 10px;
 }
 .result{
   margin-top: 20px;
@@ -83,4 +88,9 @@ button :hover{
 .result p:first-child{
   color:#07273c;
   font-weight: bold;
+}
+.error{
+  margin-bottom: 10px;
+  color: red;
+  font-size: 14px;
 }
